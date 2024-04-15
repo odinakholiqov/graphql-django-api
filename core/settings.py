@@ -42,10 +42,6 @@ INSTALLED_APPS = [
     "books"
 ]
 
-GRAPHENE = {
-    "SCHEMA": "books.schema.schema"
-}
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
