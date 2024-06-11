@@ -13,6 +13,7 @@ class BookType(DjangoObjectType):
         model = Book
         fields = "__all__"
 
+    
 
 class AuthorType(DjangoObjectType):
     class Meta:
@@ -23,14 +24,21 @@ class AuthorType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     books = graphene.List(BookType)
-    authors = graphene.List(AuthorType)
 
+    def resolve_books(root, id, **kwargs):
+        print("kwargs", kwargs)
+        print("id", id)
+        print("root", root)
+        id = kwargs.get("id", False)
 
-    def resolve_books(self, info, **kwargs):
+        if id:
+            return Book.objectes.get(pk=id)
+        
         return Book.objects.all()
-    
-    def resolve_authors(self, info, **kwargs):
-        return Author.objects.all()
-    
+
+
+class Mutation(graphene.ObjectType):
+    pass
+
 
 schema = graphene.Schema(query=Query)
